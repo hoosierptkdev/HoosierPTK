@@ -25,7 +25,7 @@ def Home(request):
         "num_users":num_users,
         "num_topics":num_topics,
         "last_post":last_post,
-        "title":"Forums",
+        "title":"Hoosier PTK",
     }
 
     return render(request, "forums/home.html", context)
