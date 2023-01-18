@@ -1,0 +1,78 @@
+<!-- Extend "base.html" -->
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+<!-- "Content" Block -->
+{% block content %}
+
+<!-- Search Results Container -->
+<div class="container-fluid">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-nav" style="--bs-breadcrumb-divider: '>>';">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'forums:home' %}">Hoosier PTK</a></li>
+			<li class="breadcrumb-item active">Search: {{query}}  >>  {{results|length}} Result(s) Found</li>
+		</ol>
+	</div>
+
+    <!-- Search Results Card / Table -->
+	<div class="card">
+
+		<!-- Search Results Card Heading Row -->
+		<div class="card-heading">
+
+			<!-- Search Results Status Icon Heading -->
+			<div class="status">Status</div>
+
+			<!-- Search Results Subject Heading -->
+			<div class="subjects">Subjects</div>
+
+			<!-- Search Results Replies/Views Heading -->
+			<div class="replies">Replies/Views</div>
+
+			<!-- Search Results Last Reply Heading -->
+			<div class="last-reply">Last Reply</div>
+
+		</div>
+
+        <!-- Search Results (LOOP) -->
+        {% for post in results %}
+
+            <!-- Search Results Content -->
+            <div class="card-content">
+
+                <!-- Search Results Status/STATE Icon/LOGIC -->
+                <div class="status"><i class="{{post.get_status}}"></i></div>
+
+                <!-- Search Results Subject -->
+                <div class="subjects">
+                    <a href="{{post.get_url}}">{{post.title}}</a>
+                    <br>
+                    <span>Started by <b><a href="#">{{post.user.fullname|title}}</a></b>.</span>
+                </div>
+
+                <!-- Search Results Replies/Views -->
+                <div class="replies">
+                    {{post.num_comments}} Comments 
+                    <br>
+                    {% get_hit_count for post %} Views
+                </div>
+
+                <!-- Search Results Last Reply -->
+                <div class="last-reply">
+                    {% if post.last_reply %}
+                    {{post.last_reply.date|date}}
+                    <br>
+                    By <b><a href="#">{{post.last_reply.user.fullname|title}}</a></b>
+                    {% else %}
+                    None
+                    {% endif %}
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+    
+{% endblock content %}

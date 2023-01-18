@@ -1,0 +1,133 @@
+<!-- Extend "base.html" -->
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+<!-- "Content" Block -->
+{% block content %}
+
+<!-- Posts Container -->
+<div class="container-fluid">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-nav" style="--bs-breadcrumb-divider: '>>';">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'forums:home' %}">Hoosier PTK</a></li>
+			<li class="breadcrumb-item active">{{topic.title}}</li>
+		</ol>
+	</div>
+
+    <!-- Posts Card / Table -->
+	<div class="card">
+
+		<!-- Posts Card Heading Row -->
+		<div class="card-heading">
+
+			<!-- Posts Status Icon Heading -->
+			<div class="status">Status</div>
+
+			<!-- Posts Subject Heading -->
+			<div class="subjects">Subjects</div>
+
+			<!-- Posts Replies/Views Heading -->
+			<div class="replies">Replies/Views</div>
+
+			<!-- Posts Last Reply Heading -->
+			<div class="last-reply">Last Reply</div>
+
+		</div>
+
+        <!-- Posts (LOOP) -->
+        {% for post in posts %}
+
+            <!-- Posts Content -->
+            <div class="card-content">
+
+                <!-- Posts Status/STATE Icon/LOGIC -->
+                <div class="status"><i class="{{post.get_status}}"></i></div>
+
+                <!-- Posts Subject -->
+                <div class="subjects">
+                    <a href="{{post.get_url}}">{{post.title}}</a>
+                    <br>
+                    <span>Started by <b><a href="#">{{post.user.fullname|title}}</a></b>.</span>
+                </div>
+
+                <!-- Replies/Views -->
+                <div class="replies">
+                    {{post.num_comments}} Comments 
+                    <br>
+                    {% get_hit_count for post %} Views
+                </div>
+
+                <!-- Last Reply -->
+                <div class="last-reply">
+                    {% if post.last_reply %}
+                    {{post.last_reply.date|date}}
+                    <br>
+                    By <b><a href="#">{{post.last_reply.user.fullname|title}}</a></b>
+                    {% else %}
+                    None
+                    {% endif %}
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Pagination -->
+	<div class="pagination-nav">
+		<ul class="pagination justify-content-center">
+
+            <!-- Check if Results are Paginated -->
+            {% if posts.paginator.num_pages > 1 %}
+
+                <!-- Previous Button / LOGIC -->
+                <li class="page-item">
+                    {% if posts.has_previous %}<a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a>
+                    {% else %}<a class="page-link disabled">Previous</a>{% endif %}
+                </li>
+
+                <!-- FOR LOOP for Page Numbers -->
+                {% for num_page in posts.paginator.page_range %}
+                    {% if posts.number == num_page %}  <!-- Active Page Number -->
+                        <li class="page-item active"><a class="page-link" href="?page={{num_page}}">{{num_page}}</a></li>
+                    {% else %}  <!-- Non-Active Page Number -->
+                        <li class="page-item"><a class="page-link" href="?page={{num_page}}">{{num_page}}</a></li>
+                    {% endif %}    
+                {% endfor %}
+
+                <!-- Next Button / LOGIC -->
+                <li class="page-item">
+                    {% if posts.has_next %}<a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+                    {% else %}<a class="page-link disabled">Next</a>{% endif %}
+                </li>
+                
+            {% endif %}
+
+		</ul>
+	</div>
+
+    <!-- Post's Status Icon Legend -->
+    <div class="card legend">
+        <span>
+            <i class="fa fa-frown"></i>&nbsp; No Engagement Topic <br> <!-- No Replies/Views -->
+        </span>
+        <span>
+            <i class="fa fa-book"></i>&nbsp; Low Engagement Topic <br> <!-- Few Replies/Views -->
+        </span>
+        <span>
+            <i class="fa fa-rocket"></i>&nbsp; High Engagement Topic <br> <!-- Many Replies/Views -->
+        </span>
+        <span>
+            <i class="fa fa-fire"></i>&nbsp; Popular Topic <br> <!-- Many Replies/Views Recently -->
+        </span>
+        <span>
+            <i class="fa fa-lock"></i>&nbsp; Closed Topic <br> <!-- Closed Topic -->
+        </span>
+    </div>
+
+</div>
+    
+{% endblock content %}

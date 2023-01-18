@@ -1,0 +1,22 @@
+/* SIGNIN.HTML */
+
+.registration-form h1 {
+    padding: 20px;
+    font-family: 'Titillium Web: SB', sans-serif;
+    font-size: xx-large;
+    color: #d38125;
+    background-color: #0f1d40;
+    font-weight: bolder;
+}
+
+.registration-card {
+    margin-block: 20px;
+}
+
+.registration-card .card-body {
+    font-family: 'Titillium Web: I', sans-serif;
+    font-size: larger;
+    background-color: #404347;
+    color: #139aed;
+    font-weight: bold;
+}

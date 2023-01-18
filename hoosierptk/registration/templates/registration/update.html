@@ -1,0 +1,42 @@
+<!-- Extend "base.html" -->
+{% extends 'base.html' %}
+
+<!-- Load Crispy Forms Tags -->
+{% load crispy_forms_tags %}
+
+<!-- "Content" Block -->
+{% block content %}
+
+<!-- Form Container -->
+<div class="container registration-form">
+
+    <!-- Card -->
+    <div class="card registration-card">
+
+        <!-- Page Heading -->
+        <h1 class="card-header">Update {{user}}'s Profile</h1>
+
+        <div class="card-body">
+
+            <!-- User Signin Form -->
+            <form method="POST" action="." enctype="multipart/form-data">
+                
+                <!-- PLACE CSRF TOKEN IN ALL POST FORMS!! -->
+                {% csrf_token %}
+
+                <!-- Load form from view -->
+                {{form|crispy}}
+
+                <!-- Form "submit" button -->
+                <div class="d-grid col-2 mx-auto">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Update Profile">
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,310 @@
+/* ========================================[BASE.HTML]======================================== */
+
+
+/* GLOBAL */
+a {
+    text-decoration: none;
+}
+
+
+/* NAVBAR */
+nav {
+    background-color: #1c3063;
+    font-size: large;
+}
+
+.btn-search {
+    transition-duration: 0.2s;
+    color: #dfad36;
+    border: 1px solid #dfad36;
+}
+
+.btn-search:hover {
+    background-color: #dfad36;
+    color: #1c3063;
+    border: 1px solid #dfad36;
+}
+
+.add-btn {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.search-select {
+    margin-inline-end: 6px;
+}
+
+
+/* FOOTER */
+footer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1c3063;
+    display: block;
+    text-align: center;
+    font-style: italic;
+    color: #dfad36;
+}
+
+
+
+
+
+/* ========================================[HOME.HTML]======================================== */
+
+
+/* FORUM */
+.forum {
+    margin: 20px;
+    padding-bottom: 6px;
+}
+
+.forum-title {
+    background-color: #0f1d40;
+    padding: 10px;
+    font-family: 'Titillium Web: SB', sans-serif;
+    color: #d38125;
+    margin-bottom: 6px;
+}
+
+
+/* TOPIC */
+.topic-row {
+    display: grid;
+    grid-template-columns: 7% 60% 13% 20%;
+    margin-inline: 6px;
+    font-family: 'Titillium Web: I', sans-serif;
+}
+
+.topic-row a {
+    color: #139aed;
+}
+
+.topic-column {
+    padding: 10px;
+    margin: 4px;
+    background-color: #404347;
+    border-radius: 5px;
+}
+
+.center-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topic-icon i {
+    font-size: 45px;
+}
+
+.topic-description a {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.topic-info {
+    padding: 20px;
+}
+
+
+/* FORUM INFO */
+.chart {
+    font-family: 'Titillium Web: SBI', sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+    color: #fff;
+}
+
+.forum-info {
+    margin-inline: 10px;
+    padding: 10px;
+    font-family: 'Titillium Web: I', sans-serif;
+    background-color: #404347;
+    padding-bottom: 14px;
+}
+
+/* Divider 
+.topic-divider {
+    display: block;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(190, 190, 190, 0), rgba(255, 255, 255, 0.75), rgba(190, 190, 190, 0));
+}
+*/
+
+
+
+
+
+/* ========================================[POSTS.HTML]======================================== */
+
+
+/* BREADCRUMBS */
+.breadcrumb-nav {
+    margin: 15px;
+    font-family: 'Titillium Web: SB', sans-serif;
+    font-size: larger;
+}
+
+
+/* CARD HEADING */
+.card-heading {
+    display: flex;
+}
+
+.card-heading div {
+    padding: 5px;
+    margin: 2px;
+    background-color: #0f1d40;
+    font-weight: bold;
+    color: #d38125;
+}
+
+.card-heading .status {
+    flex: 5%;
+}
+
+.card-heading .subjects {
+    flex: 70%;
+}
+
+.card-heading .replies {
+    flex: 10%;
+}
+
+.card-heading .last-reply {
+    flex: 15%;
+}
+
+
+/* CARD CONTENT */
+.card-content {
+    display: flex;
+}
+
+.card-content .status, .card-content .subjects, .card-content .replies, .card-content .last-reply {
+    padding: 5px;
+    margin: 2px;
+    background-color: #404347;
+}
+
+.card-content .status {
+    flex: 5%;
+    font-size: 30px;
+    text-align: center;
+}
+
+.card-content .subjects {
+    flex: 70%;
+}
+
+.card-content .replies {
+    flex: 10%;
+}
+
+.card-content .last-reply {
+    flex: 15%;
+}
+
+
+/* PAGINATION */
+.pagination-nav {
+    margin: 15px;
+    font-family: 'Titillium Web: SB', sans-serif;
+    font-size: larger;
+}
+
+
+/* ICON LEGEND */
+.legend {
+    background-color: #404347;
+    padding: 15px;
+    display: block;
+}
+
+.legend span {
+    font-family: 'Titillium Web: SBI', sans-serif;
+    font-size: x-large;
+    margin-block: 5px;
+}
+
+
+
+
+
+/* ========================================[DETAIL.HTML]======================================== */
+
+
+/* TOPIC HEADING */
+.topic-head {
+    display: flex;
+    background-color: #2C2C2C;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.authors {
+    flex: 20%;
+}
+
+.contents {
+    flex: 80%;
+}
+
+
+/* TOPIC CONTENTS */
+.topic-body {
+    display: flex;
+    background-color: #404347;
+    padding: 10px;
+}
+
+.topic-body .authors .username {
+    font-size: 20px;
+}
+
+.topic-body .authors img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+
+/* TOPIC CLOSED ALERT */
+.closed-alert {
+    margin-block: 10px;
+    font-weight: bold;
+}
+
+
+/* COMMENTS */
+.comment-container {
+    margin-top: 15px; /* was 50px */
+}
+
+
+
+
+
+/* ========================================[WEBFONTS]======================================== */
+
+
+/* Titillium Web (Semi-Bold) */
+@font-face {
+    font-family: 'Titillium Web: SB';
+    src: url('../webfonts/TitilliumWeb-SemiBold.ttf') format('truetype');
+}
+
+
+/* Titillium Web (Italic) */
+@font-face {
+    font-family: 'Titillium Web: I';
+    src: url('../webfonts/TitilliumWeb-Italic.ttf') format('truetype');
+}
+
+
+/* Titillium Web (Semi-Bold Italic) */
+@font-face {
+    font-family: 'Titillium Web: SBI';
+    src: url('../webfonts/TitilliumWeb-SemiBoldItalic.ttf') format('truetype');
+}

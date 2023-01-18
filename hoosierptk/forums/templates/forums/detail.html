@@ -1,0 +1,209 @@
+<!-- Extend "base.html" -->
+{% extends 'base.html' %}
+
+<!-- "Content" Block -->
+{% block content %}
+{% load hitcount_tags %}
+
+
+<!-- Post Container -->
+<div class="container-fluid">
+
+	<!-- Breadcrumbs -->
+	<div class="breadcrumb-nav" style="--bs-breadcrumb-divider: '>>';">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'forums:home' %}">Hoosier PTK</a></li>
+			<li class="breadcrumb-item"><a href="{{post.topic.get_url}}">{{post.topic}}</a></li>
+			<li class="breadcrumb-item active">{{post.title}}</li>
+		</ol>
+	</div>
+
+    <!-- Topic Card -->
+	<div class="card">
+
+		<!-- Topic Heading Row -->
+		<div class="card-header topic-head">
+
+            <!-- Topic Authors Heading [COLUMN 1] -->
+            <div class="authors">Author</div>
+
+            <!-- Topic Contents Heading [COLUMN 2] -->
+            <div class="contents">Topic: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+
+		</div>
+
+		<!-- Topic Body -->
+		<div class="topic-body">
+
+			<!-- Topic Author -->
+			<div class="authors">
+                <div class="username"><a href="#">{{post.user.fullname|title}}</a></div>
+                <div>{{post.user.role}}</div>
+                <img src="{{post.user.profile_pic.url}}" alt="">
+                <div>Posts: <u>{{post.user.num_posts}}</u></div>
+                <div>Points: <u>{{post.user.points}}</u></div>
+            </div>
+
+			<!-- Topic Body [COLUMN 2]-->
+			<div class="contents">
+				{{post.content|safe}}
+				<br><br>
+
+				<!-- Comment Button / Form -->
+				<div class="d-grid d-md-flex justify-content-end comment">
+                    {% if post.closed is True %}
+                    <button class="btn btn-secondary" type="button" disabled>Comment</button>
+                    {% else %}
+					<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#commentModal">Comment</button>
+                    {% endif %}
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+    <!-- Post Closed Banner -->
+    {% if post.closed is True %}
+	<div class="alert alert-warning closed-alert" role="alert">
+		This Topic Is Closed!
+	</div>
+    {% endif %}
+
+
+    <!-- Comment Modal / FORM (TinyMCE!!!!)  -->
+	<div class="modal fade" id="commentModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+                <!-- STILL NEED TINYMCE -->
+                <form action="." method="post">
+                    {% csrf_token %}
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="commentModalLabel">Leave a Comment</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+				        <div class="modal-body">
+                            <div class="comment-area" id="commentArea">
+                                <textarea name="comment" id="" placeholder="comment here ...." rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <input type="submit" name="comment-form" id="" value="Submit" class="btn btn-primary">
+                        </div>
+
+                </form>
+			</div>
+		</div>
+	</div>
+        
+
+    <!-- Comments Loop -->
+    {% for comment in post.comments.all %}
+        
+        <!-- Comment Container -->
+        <div class="card comment-container">
+
+            <!-- Comment Table Body -->
+            <div class="topic-body">
+
+                <!-- Comment Author -->
+                <div class="authors">
+                    <div class="username"><a href="#">{{comment.user.fullname|title}}</a></div>
+                    <div>{{comment.user.role}}</div>
+                    <img src="{{comment.user.profile_pic.url}}" alt="">
+                    <div>Posts: <u>{{comment.user.num_posts}}</u></div>
+                    <div>Points: <u>{{comment.user.points}}</u></div>
+                </div>
+
+                <!-- Comment Body [COLUMN 2]-->
+                <div class="contents">
+                    {{comment.content|safe}}
+                    <br><br>
+
+                    <!-- Reply Button / Form -->
+                    <div class="d-grid d-md-flex justify-content-end comment">
+                        {% if post.closed is True %}
+                        <button class="btn btn-secondary" type="button" disabled>Reply</button>
+                        {% else %}
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#comment{{comment.id}}Modal">Reply</button>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Reply Modal / FORM (TinyMCE!!!!)  -->
+            <div class="modal fade" id="comment{{comment.id}}Modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- STILL NEED TINYMCE -->
+                        <form action="." method="post">
+                            {% csrf_token %}
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="comment{{comment.id}}ModalLabel">Reply to a Comment</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="comment-area" id="comment{{comment.id}}">
+                                        <textarea name="reply" id="" placeholder="reply here ...." rows="4" cols="50"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <input type="submit" name="reply-form" id="" value="Submit" class="btn btn-primary">
+                                    <!-- hidden input to pass comment id to the view -->
+                                    <input type="hidden" name="comment-id" value="{{comment.id}}">
+                                </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            
+
+            <!-- Replies Loop -->
+            {% for reply in comment.replies.all %}
+            
+                <!-- Reply Container -->
+                <div class="card comment-container" style="width:95%; margin-left:5%;">
+
+                    <!-- Reply Table Body [ROW 2] -->
+                    <div class="topic-body">
+
+                        <!-- Reply Author [COLUMN 1]-->
+                        <div class="authors">
+                            <div class="username"><a href="#">{{reply.user.fullname|title}}</a></div>
+                            <div>{{reply.user.role}}</div>
+                            <img src="{{reply.user.profile_pic.url}}" alt="">
+                            <div>Posts: <u>{{reply.user.num_posts}}</u></div>
+                            <div>Points: <u>{{reply.user.points}}</u></div>
+                        </div>
+
+                        <!-- Reply Body [COLUMN 2]-->
+                        <div class="contents">
+                            {{reply.content|safe}}
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+            
+
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock content %}

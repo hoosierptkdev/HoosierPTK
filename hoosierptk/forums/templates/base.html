@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<!-- HTML Document -->
+<html lang="en" data-bs-theme="dark">
+
+
+<!-- Document Head -->
+<head>
+
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Document Title -->
+    <title>{{title}}</title>
+
+    <!-- Load Static Files -->
+    {% load static %}
+
+    <!-- Manually Set Favicon -->
+    <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}">
+
+    <!-- Import CSS Stylesheets -->
+    <link rel="stylesheet" type="text/css" href={% static 'css/bootstrap-5.3.1.css' %}> <!-- Bootstrap v5.3.1 -->
+    <link rel="stylesheet" type="text/css" href={% static 'css/bootstrap-icons-1.10.3.css' %}> <!-- Bootstrap Icons v1.10.3 -->
+    <link rel="stylesheet" type="text/css" href={% static 'css/jquery-ui-1.13.2.css' %}> <!-- JQuery UI v1.13.2 -->
+    <link rel="stylesheet" type="text/css" href={% static 'css/cropper-1.5.13.css' %}> <!-- Cropper v1.5.13 -->
+    <link rel="stylesheet" type="text/css" href={% static 'css/font-awesome-6.2.1.min.css' %}> <!-- FontAwesome v6.2.1 -->
+    <link rel="stylesheet" href={% static 'css/custom-styles.css' %}> <!-- Custom Styles v1.0.0 -->
+    <link rel="stylesheet" href={% static 'css/form-styles.css' %}> <!-- Registration: Form Styles v1.0.0 -->
+
+</head>
+
+
+<!-- Document Body -->
+<body>
+
+    <!-- Document Header -->
+    <header>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg" >
+            <div class="container-fluid">
+                
+                <!-- Navbar Logo (PTK) -->
+                <a class="navbar-brand" href="https://www.ptk.org"><img src="{% static 'img/brand.png' %}"></a>
+                    <!-- add link to ptk.org (fix indents) -->
+
+                <!-- Navbar Hamburger Menu Button (Responsive) -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar Content -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <!-- Home Link -->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'forums:home' %}">Home</a>
+                                <!-- FIX LOGIC FOR 'ACTIVE' PAGE -->
+                        </li>
+
+                        <!-- Rules Link (OFFCANVAS - SEE BOTTOM OF DOCUMENT) -->
+                        <li class="nav-item">
+                            <a class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRules">Rules</a>
+                        </li>
+
+                        <!-- User Authentication Check -->
+                        {% if request.user.is_authenticated %}
+
+                            <!-- Account Link / Menu -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    Account
+                                </a>
+                                    <!-- CREATE ACCOUNT OPTIONS DROPDOWN, MODAL, OR OFFCANVAS (OR PAGE) -->
+
+                                <!-- Menu Options -->
+                                <ul class="dropdown-menu">
+                                
+                                    <!-- View Profile Option -->
+                                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+
+                                    <!-- Invite Users Option -->
+                                    <li><a class="dropdown-item" href="#">Invite Users</a></li>
+
+                                    <!-- Menu Divider -->
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <!-- Logout Option -->
+                                    <li><a class="dropdown-item" href="{% url 'registration:logout' %}">Logout</a></li>
+
+                                </ul>
+                            </li>
+
+                            <!-- Create Post Option (Disabled if Logged Out) -->
+                            <li class="nav-item">
+                                <a class="nav-link bi bi-plus-lg add-btn" href="{% url 'forums:create_post' %}"></a>
+                            </li>
+
+                        {% else %} <!-- CLEAN THIS LOGIC UP TO AVOID DUPLICATING CODE -->
+
+                            <!-- Account Link / Menu -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    Account
+                                </a>
+                                    <!-- CREATE ACCOUNT OPTIONS DROPDOWN, MODAL, OR OFFCANVAS (OR PAGE) -->
+
+                                <!-- Menu Options -->
+                                <ul class="dropdown-menu">
+                                
+                                    <!-- Sign Up Option -->
+                                    <li><a class="dropdown-item" href="{% url 'registration:signup' %}">Sign Up</a></li>
+
+                                    <!-- Contact Us Option -->
+                                    <li><a class="dropdown-item" href="#">Contact Us</a></li>
+
+                                    <!-- Menu Divider -->
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <!-- Login Option -->
+                                    <li><a class="dropdown-item" href="{% url 'registration:signin' %}">Login</a></li>
+
+                                </ul>
+                            </li>
+
+                            <!-- Create Post Option (DISABLED) -->
+                            <li class="nav-item">
+                                <a class="nav-link disabled bi bi-plus-lg add-btn"></a>
+                            </li>
+                        
+                        {% endif %}
+
+                    </ul>
+
+                    <!-- Search Bar / FORM (in Navbar) -->
+                    <form class="d-flex" action="{% url 'forums:search' %}" role="form" method="GET">
+
+                        <select class="form-select search-select" name="search-type" id="">
+                            <option selected>Search Type...</option>
+                                <!-- FIX SEARCH SELECTION AND BACKEND LOGIC -->
+                            <!-- Search Titles & Descriptions (Everything, REMOVE DEFAULT SELECTION) -->
+                            <option value="everything">Everything</option>
+                            <!-- Search Titles -->
+                            <option value="titles">Titles</option>
+                            <!-- Search Descriptions -->
+                            <option value="descriptions">Descriptions</option>
+                        </select>
+
+                        <!-- User Input for Search -->
+                        <input class="form-control me-2" type="text" name="q" id="" placeholder="search...">
+
+                        <!-- Search Button -->
+                        <button class="btn btn-outline-success btn-search" type="submit" name="search">Search</button>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+
+    <!-- "Content" Block -->
+    {% block content %}{% endblock content %}
+    
+    
+    <!-- Page Footer -->
+    <footer>
+        <span>&copy; &nbsp;HoosierPTK &nbsp;|&nbsp; All Rights Reserved</span>
+    </footer>
+
+    <!-- Import JavaScript Files -->
+    <script src={% static 'js/jquery-3.6.3.js' %}></script> <!-- JQuery v3.6.3 -->
+    <script src={% static 'js/cropper-1.5.13.js' %}></script> <!-- Cropper v1.5.13 -->
+    <script src={% static 'js/tinymce-6.3.1.min.js' %}></script> <!-- TinyMCE v6.3.1 -->
+    <script src={% static 'js/jquery-ui-1.13.2.js' %}></script> <!-- JQuery UI v1.13.2 -->
+    <script src={% static 'js/bootstrap-5.3.1.bundle.js' %}></script> <!-- Bootstrap Bundle v5.3.1 -->
+    <script src={% static 'js/custom.js' %}></script> <!-- Custom Scripts v1.0.0 -->
+
+    <!-- OFFCANVAS FOR RULES SECTION (HIDDEN) -->
+    <div class="h-auto offcanvas offcanvas-bottom offcanvas-test" data-bs-scroll="true" tabindex="-1" id="offcanvasRules">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRulesLabel">Hoosier PTK: Forum Rules</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>This forum is a place where PTK members can interact and have discussions about different topics. 
+                We ask that you follow these guidelines to ensure that the forums have productive conversations. 
+                These rules and guidelines are enforced by administrators and moderators, and at their discretion 
+                they may delete posts without warning that do not comply. Also, failure to comply with these rules 
+                may result in a ban from the forum.</p>
+            <p>We rely on all PTK members to help keep these discussion boards a safe place for people to share 
+                and view information. To do this, we request that all members comply with the following rules when 
+                contributing to the discussion forums:</p>
+            <p><ul>
+                <li>Keep it friendly!</li>
+                <li>Be courteous and respectful. Appreciate that others may have an opinion different from yours.</li>
+                <li>Stay on topic. When creating a new discussion thread, give a clear topic title and put your post 
+                    in the appropriate category. When contributing to an existing discussion, try to stay 'on topic'. 
+                    If something new comes up within a topic that you would like to discuss, start a new thread.</li>
+                <li>Share your knowledge. Don't hold back in sharing your knowledge - it's likely someone will find it 
+                    useful or interesting. When you give information, provide your sources.</li>
+                <li>Refrain from demeaning, discriminatory, or harassing behaviour and speech.</li>
+            </ul></p>
+            <p>We maintain the rights to remove posts and threads to ensure that material posted in the discussion forums 
+                is not potentially harmful. For this reason, we may edit or choose not to publish any post, that:</p>
+            <p><ul>
+                <li>contains disrespectful or derogatory remarks about any person</li>
+                <li>contains advice or content that we believe is damaging, unhelpful or distressing to others</li>
+                <li>contains swearing or offensive language, is nonsensical and/or irrelevant</li>
+                <li>promotes personal beliefs in a way that is disrespectful of the choices of others</li>
+                <li>is racist, sexist, homophobic, sexually explicit or suggestive, abusive or otherwise discriminatory or objectionable</li>
+            </ul></p>
+            <p>Thank you for visiting Hoosier PTK!</p>
+            <p><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>~ Web Master</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<!-- COMMENT DOCUMENT and use VALIDATORS ALSO ADD COMMENT STYLING AND DOCSTRING COMMENT -->

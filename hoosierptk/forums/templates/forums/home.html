@@ -1,0 +1,84 @@
+<!-- Extend "base.html" -->
+{% extends 'base.html' %}
+
+<!-- "Content" Block -->
+{% block content %}
+
+
+<!-- Container -->
+<div class="container-fluid">
+
+    {% for forum in forums %}
+        <!-- Forum Card -->
+        <div class="card forum">
+
+            <!-- Forum Title (ROW 1) -->
+            <h5 class="card-header forum-title">{{forum.title}}</h5>
+
+            <!-- EACH TOPIC (CHANGE NAMES) -->
+            {% for topic in topics %}
+            {% if topic.forum == forum %}
+
+                <!-- Topic (ROW 2+) -->
+                <div class="topic-row">
+
+                    <!-- Topic Icon (COL 1) -->
+                    <div class="topic-column center-column topic-icon">
+                        <i class="{{topic.icon}}"></i>
+                    </div>
+
+                    <!-- Topic Description [COLUMN 2] -->
+                    <div class="topic-column topic-description">
+                        <a href="{{topic.get_url}}">{{topic.title}}</a>
+                        <p>{{topic.description}}</p>
+                    </div>
+
+                    <!-- Topic Stats [COLUMN 3] -->
+                    <div class="topic-column center-column topic-stats">
+                        <span>{{topic.num_posts}} Posts</span>
+                        <!-- NOTE: Removed Topics? Add later ("X Posts | 15 Topics") -->
+                    </div>
+
+                    <!-- Topic Info (Last Post) [COLUMN 4] -->
+                    <div class="topic-column topic-info">
+                        {% if topic.last_post %}
+                        <b><a href="{{topic.last_post.get_url}}">Last Post</a></b> by <a href="">{{topic.last_post.user.fullname}}</a>
+                        <br>
+                        on <small>{{topic.last_post.date|date}}</small>
+                        {% else %}
+                        <div class="topic-column center-column">No Posts</div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <!-- Topic Divider (RESPONSIVE)
+                <hr class="topic-divider"> -->
+
+            {% endif %}
+            {% endfor %}
+            
+
+        </div>
+    {% endfor %}
+
+
+    <!-- Forum Info -->
+    <div class="card forum-info">
+        <div class="chart">
+                HoosierPTK Forum - Stats &nbsp;<i class="fa fa-chart-column"></i>
+        </div>
+        <div>
+            <span><b><u>{{num_posts}}</u></b> Posts in <b><u>{{num_topics}}</u></b> Topics by <b><u>{{num_users}}</u></b> Users</span>
+            <br>
+            <span>Latest Post: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> on {{last_post.date|date}} by <a href="">{{last_post.user.fullname|title}}</a></span>
+            <br>
+            <span>Check out the <b><u><a href="{% url 'forums:latest_posts' %}">latest posts</a></u></b> !</span>
+            <br>
+        </div>
+
+    </div>
+
+</div>
+    
+{% endblock content %}

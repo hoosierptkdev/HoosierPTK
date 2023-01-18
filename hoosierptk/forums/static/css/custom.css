@@ -1,0 +1,116 @@
+/* ================================================================================ 
+   |                               OLD GLOBAL STYLES                                 | 
+   ================================================================================ */
+
+/* All Elements [*] 
+* {
+    box-sizing: border-box;
+}
+
+/* HTML Document [TAG] 
+html {
+    font-size: 14px;
+    font-family: 'Titillium Web', sans-serif;
+    background-color: rgb(0, 0, 0);
+    color: #FEFEFE;
+}
+
+/* Anchor (Link) [TAG] 
+a {
+    color: #FF0042;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+/* Heading 1 [TAG] 
+h1 {
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+/* ================================================================================ */
+
+
+/* ================================================================================ 
+   |                             "DETAIL" PAGE STYLES                             | 
+   ================================================================================ */
+
+/* Topic Table Heading Row [CLASS] */
+.topic-head {
+    display: flex;
+    background-color: #2C2C2C;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* Topic Authors Column [CLASS] */
+.authors {
+    flex: 20%;
+}
+
+/* Topic Contents Column [CLASS] */
+.contents {
+    flex: 80%;
+}
+
+/* Topic Table Body [CLASS] */
+.topic-body {
+    display: flex;
+    background-color: #131415;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+/* Topic Table Body / Authors Column / Username [CLASS/CLASS/CLASS] */
+.topic-body .authors .username {
+    font-size: 20px;
+}
+
+/* Topic Table Body / Authors Column / Avatar Image [CLASS/CLASS/TAG] */
+.topic-body .authors img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+/* Topic Table Body / Contents Column / Comment Button [CLASS/CLASS/CLASS/TAG] */
+.topic-body .contents .comment button {
+    border: none;
+    padding: 10px;
+    font-weight: bolder;
+    box-shadow: 4px 6px #FFF;
+    cursor: pointer;
+    float: right;
+}
+
+/* Comment Area [CLASS] */
+.comment-area {
+    margin-top: 50px;
+}
+
+/* Comment Area / Text Box [CLASS/TAG] */
+.comment-area textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-block: 10px;
+}
+
+/* Comment Area / Submit Button [CLASS/TAG] */
+.comment-area input {
+    float: right;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Comment Area / Submit Button: Hover Effect [CLASS/TAG:STATE] */
+.comment-area input:hover {
+    border: solid 1px #000000;
+}
+
+/* Comment Container [CLASS] */
+.comment-container {
+    margin-top: 5px; /* was 50px */
+}
+
